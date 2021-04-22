@@ -1,6 +1,14 @@
-describe("basic block", () => {
-  it("2 to be 2", () => {
+import { Repository, Post } from "./repo";
+describe("repository", () => {
+  it("should allow to add new post", () => {
     expect.assertions(1);
-    expect(2).toBe(2);
+    const repo = new Repository();
+    const newPost: Post = {
+      id: "kkl",
+      title: "title",
+      body: "body",
+    };
+    repo.addPost(newPost);
+    expect(repo.getPosts()).toHaveLength(1);
   });
 });
