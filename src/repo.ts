@@ -1,22 +1,26 @@
-export interface Post {
-  id: string;
-  title: string;
-  body: string;
-}
-export interface RepositoryInterface {
-  posts: Array<Post>;
-  addPost: (params: Post) => void;
-  getPosts: () => Array<Post>;
-}
-export class Repository implements RepositoryInterface {
-  posts: Post[];
+import type { Purchase, PurchaseId } from "./purchase.interface";
+import cuid from "cuid";
+
+export class Repository {
+  private fullList: Purchase[];
   constructor() {
-    this.posts = [];
+    this.fullList = [];
   }
-  addPost(newPost: Post): void {
-    this.posts.push(newPost);
+  getPurchases(): Purchase[] {
+    return this.fullList;
   }
-  getPosts(): Array<Post> {
-    return this.posts;
+
+  add(item: Omit<Purchase, "id">): PurchaseId {
+    const id = cuid();
+    this.fullList.push({ id, ...item });
+    return id;
+  }
+
+  getById(id: PurchaseId): Purchase | undefined {
+    return this.fullList.find((item) => item.id === id);
+  }
+
+  delete(id: PurchaseId): void {
+    this.fullList = this.fullList.filter((item) => item.id !== id);
   }
 }

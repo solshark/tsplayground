@@ -10,6 +10,7 @@ module.exports = {
   ],
   rules: {
     "no-loops/no-loops": 2,
+    "jest/no-hooks": 1,
   },
   overrides: [
     {
